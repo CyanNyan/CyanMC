@@ -1,0 +1,12 @@
+name: moderator
+permissions:
+- easywhitelist.admin
+- essentials.ban
+- essentials.banip
+- essentials.broadcast
+- essentials.kick
+- essentials.mute
+- essentials.tempban
+- essentials.tempbanip
+- essentials.unban
+- essentials.unbanip

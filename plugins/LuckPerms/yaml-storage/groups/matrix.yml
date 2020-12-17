@@ -1,0 +1,8 @@
+name: matrix
+permissions:
+- matrix.command
+- matrix.gui
+- matrix.notify
+- matrix.ping
+- matrix.verbose
+- matrix.violations

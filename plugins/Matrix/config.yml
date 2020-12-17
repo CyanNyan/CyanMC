@@ -1,0 +1,128 @@
+#### MATRIX CONFIG FILE
+#                         MATRIX ANTI CHEAT
+#             file: config.yml  | Customize general settings here
+#
+# Links:
+#   1. Issue Tracker: https://github.com/jiangdashao/Matrix-Issues/issues
+#   2. SpigotMC Overview Page: https://www.spigotmc.org/resources/64635/
+#   3. bStats: https://bstats.org/plugin/bukkit/Matrix
+#   4. Discord Group: https://discord.gg/pEvY55J
+#
+# Contributors:
+#   Performance#1955: Report a lot of bugs and manage the Github issue tracker
+#   Zak#6435 & Alex#2237: Provide the test server and report some bugs
+#   Kruize#9138 & VariationTime#2942: Report a lot of bugs and test in the production environment
+#
+# Thanks for using Matrix! <3
+
+# Check update when starting up?
+check_update: false
+
+# Player Latency Protection
+# Reduce the VL value triggered by high-latency players, making them less likely to be kicked out
+player_latency_protection:
+  # Enable this feature?
+  enable: true
+
+# Database logging system
+database:
+  # Should matrix use a database to record player data?
+  enable: false
+
+  # Database address
+  address: 'localhost'
+
+  # Database name
+  db: 'minecraft'
+
+  # Database username
+  username: 'root'
+
+  # Database password
+  password: 'root'
+
+## Load the configuration file from Http(s) server (Only "checks.yml"!)
+# Some large servers have dozens or even hundreds of sub-servers, so updating configuration
+# files is very troublesome for them. This feature can help Matrix directly load configuration
+# files from a central address.
+cloud_config:
+  # Enable this feature? (default: false)
+  enable: false
+
+  # you can add multiple links here, it can avoid losing configuration files due to a link going offline
+  # If all links going offline, Matrix will use the default configuration
+  links:
+    - 'your configuration file link'
+
+# Permission Cache refresh interval (unit: seconds, default: 15)
+permission_refresh_interval: 15
+
+# Kick Lighting Effect
+# Should there be a lightning bolt visual effect if someone is getting kicked using /matrix kick
+kick_strike_lightning: false
+
+# Ghost Mode
+# If you enable Ghost Mode, Matrix will Not setback player or cancel illegal actions.
+# I don't recommend turning this feature on, which can lead to bypasses, such as teleport
+ghost_mode: false
+
+# Premium User
+# This is an authentication system that provides better service to paying users.
+# If you are premium user, you will get more additional KillAura checks
+# You can learn more on our Discord server!
+premium_user:
+  # Login user name
+  user: ''
+
+  # Login password
+  password: ''
+
+# Server Lag Protection
+# Automatically disables some checks when your server is lagging. This prevents
+# most, but not all, false positives from occuring.
+tps_protection:
+  # Enable this feature?
+  enable: true
+
+  # Minimum TPS needed to trigger protection
+  min_tps: 17.0
+
+  # Lag spike threshold (millisecond)
+  # If the server does not respond for a certain period of time, then close the check
+  lag_threshold: 1000
+
+# Log Violations (default: true)
+# Logs all violations to a file. Files can be found in /plugins/Matrix/logs
+# Warning: If you are using BungeeCord, I recommend setting
+# this to FALSE. This will prevent useless log files from
+# being stored and using up precious disk space.
+log_file: true
+
+# Delete outdated log files (days)
+# If the log file is stored for more than the specified number of days, the log file will be deleted
+# You can set it to `-1` to disable this feature
+delete_time: 30
+
+# Deny Bypass Permission (default: false)
+# By setting this option to TRUE, you are forcing Matrix to check everyone
+# on the server, INCLUDING anyone who has Operator status. By setting this
+# option to TRUE you can run the necessary tests without having to remove
+# your operator status.
+disable_bypass_permission: false
+
+## Relog time
+# How long after a player is kicked should he be allowed to log in (seconds)
+# also, you can set -1 to disable this feature
+relog_time: 5
+
+# Disabled components
+# You can disable a specific sub check here, instead of disabling the whole
+# check, you can find component name in the end of verbose messages
+# Example: If you add "speed.web" in the blow, the fast web check will
+# be disabled
+disabled_components:
+  - 'example entry'
+
+# Custom VL Weight (Format: component: new vl weight)
+custom_vl_weight:
+  - 'example_component:5'

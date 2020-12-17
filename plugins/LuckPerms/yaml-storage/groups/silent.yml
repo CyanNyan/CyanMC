@@ -1,0 +1,5 @@
+name: silent
+permissions:
+- essentials.silentjoin
+- essentials.silentjoin.vanish
+- essentials.silentquit

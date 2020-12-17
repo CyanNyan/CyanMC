@@ -1,0 +1,57 @@
+## Disable if you do not wish the plugin to run at all.
+enabled: true
+
+## Maximum saves a backup will hold per type per user.
+max-saves:
+  join: 10
+  quit: 10
+  death: 50
+  world-change: 10
+  force: 10
+  
+## Number of lines shown with backups on (Max: 5)
+backup-lines-visible: 4
+
+## Set folder path where the data is saved to. Set as "DEFAULT" to keep it in the plugin folder.
+folder-location: 'DEFAULT'
+
+## If enabled, this will disable YAML file backups in favour of MySQL storage.
+## Requires a MySQL server.
+mysql:
+  enabled: false
+  details:
+    host: '127.0.0.1'
+    port: 3306
+    database: 'inventory_rollback'
+    username: 'username'
+    password: 'password'
+    use-SSL: false
+
+## Sounds will play to the player when parts of their player is restored.
+sounds:
+  teleport:
+    enabled: true
+  inventory:
+    enabled: true
+  food:
+    enabled: true
+  hunger:
+    enabled: true
+  xp:
+    enabled: true
+    
+## Set how the time is displayed on the backups.
+time-zone: 'GMT'
+time-format: 'dd/MM/yyyy hh:mm:ss a z'
+
+## CAUTION - USE AT OWN RISK
+## Enabling this option will show a button to restore a player's backup fully to their character when online.
+## This will overwrite their current inventory completely and wipe what they currently have without backing it up first.
+restore-to-player-button: false
+      
+## Check for updates on Spigot when the server is started.
+update-checker: true
+
+## Allow bStats to collect anonymous server data.
+## Please leave enabled as it allows the plugin developer to see statistics about the plugin.
+bStats: true

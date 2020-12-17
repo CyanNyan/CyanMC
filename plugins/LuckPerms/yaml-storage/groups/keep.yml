@@ -1,0 +1,6 @@
+name: keep
+permissions:
+- essentials.back
+- essentials.back.ondeath
+- essentials.keepinv
+- essentials.keepxp

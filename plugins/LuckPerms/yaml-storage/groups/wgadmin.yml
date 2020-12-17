@@ -1,0 +1,15 @@
+name: wgadmin
+permissions:
+- worldedit.selection.*
+- worldguard.region.addmember.*
+- worldguard.region.addowner.*
+- worldguard.region.flag.*
+- worldguard.region.info.*
+- worldguard.region.redefine.*
+- worldguard.region.remove.*
+- worldguard.region.removemember.*
+- worldguard.region.removeowner.*
+- worldguard.region.setparent.*
+- worldguard.region.define
+- worldguard.region.list
+- worldguard.reload

@@ -1,0 +1,5 @@
+name: member
+permissions:
+- multiverse.access.world_the_end
+parents:
+- player
