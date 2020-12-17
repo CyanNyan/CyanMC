@@ -49,5 +49,5 @@ Allowed build areas:
 * Overworld:
     * (x=2048,z=2048) ~ (x=4096,z=4096)
 * Nether:
-    * (x=256,z=256) ~ (x=2048,z=2048)
-* The End: currently disabled (portals will not work).
+    * (x=0,z=0) ~ (x=2048,z=2048)
+* The End: Open to all
