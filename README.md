@@ -47,7 +47,11 @@ The server has a protection plugin to protect Cyan's builds and streams. Build i
 
 Allowed build areas:
 * Overworld:
-    * (x=2048,z=2048) ~ (x=4096,z=4096)
+    * (x=2000,z=2000) ~ (x=4096,z=4096)
 * Nether:
     * (x=0,z=0) ~ (x=2048,z=2048)
 * The End: Open to all
+
+Warning: In the overworld, the build region border will not extend to X,Z < 2000 unless we decide to do so. Items thrown outside the border cannot be picked up, and blocks beyond the border cannot be mined. You cannot ask an admin to get items or mine blocks outside the border.
+
+Depending on player activities, build region may extend beyond X,Z > 4096 in the future.
