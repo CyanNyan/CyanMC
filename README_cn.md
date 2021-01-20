@@ -5,7 +5,7 @@
 欢迎加入赛小盐的 MC 服务器！
 
 * 服务器地址: cyannyan.com
-* 游戏版本: [Paper](https://papermc.io/) 1.16.4
+* 游戏版本: [Paper](https://papermc.io/) 1.16.4/1.16.5
 * Cyan 的频道 [YouTube](https://www.youtube.com/channel/UC9wbdkwvYVSgKtOZ3Oov98g) | [Twitch](https://www.twitch.tv/cyannyan39)
 
 赛小盐的 MC 服务器是一个原版的生存服，没有加任何 mod（除了领地保护和经济系统），使用最新的客户端即可登陆，地图版本为 1.16.4。这也是小盐直播的服务器，粉丝们都可以加入，但是只有在允许交互的区域内才可以建设。

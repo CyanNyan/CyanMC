@@ -52,9 +52,13 @@ permissions:
 - inventoryrollback.restore
 - minecraft.command.effect
 - multiverse.core.config
+- multiverse.core.import
 - multiverse.core.modify
+- multiverse.core.modify.set
+- multiverse.core.reload
 - multiverse.core.spawn.self
 - playervaults.admin
+- weight.10
 - worldguard.region.bypass.lobby
 parents:
 - matrix

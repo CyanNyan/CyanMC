@@ -1,5 +1,6 @@
 name: member
 permissions:
 - multiverse.access.world_the_end
+- weight.5
 parents:
 - player

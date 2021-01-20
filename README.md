@@ -5,7 +5,7 @@ English | [中文说明](README_cn.md)
 Welcome to Cyan's Minecraft Server!
 
 * Server IP: cyannyan.com
-* Version: [Paper](https://papermc.io/) 1.16.4
+* Version: [Paper](https://papermc.io/) 1.16.4/1.16.5
 * Watch Cyan's stream!! [YouTube](https://www.youtube.com/channel/UC9wbdkwvYVSgKtOZ3Oov98g) | [Twitch](https://www.twitch.tv/cyannyan39)
 
 Cyan's Minecraft server is a vanilla survival Minecraft server created since Minecraft 1.16.4 (The Nether Update!) It is mainly used for Cyan's streams and for fans to gather and have some fun!
