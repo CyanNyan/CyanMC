@@ -2,7 +2,7 @@
 
 We do not encourage the use of any hacked clients (or cheat clients, utility mods). If you are not familiar with them, please do not use them. Many downloads contain viruses and even backdoors that upload passwords or login tokens of your minecraft, discord and other accounts.
 
-If you are familiar with hacked clients and often play with it, please be careful when using it. If basic rules are not followed, or if other players complain about cheating and ruining the fun, **You will be banned from the server.**
+If you are familiar with hacked clients and often play with it, please be careful when using it. This is not an anarchy server! If basic rules are not followed, or if other players complain about cheating and ruining the fun, **You will be banned from the server.**
 * Always verify the source before downloading and installing anything.
 * Respect other players because not everyone likes cheating.
 * Don't ruin the fun of others by griefing or lagging the server.

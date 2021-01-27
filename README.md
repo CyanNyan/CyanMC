@@ -29,7 +29,7 @@ The server has **online mode on** and a whitelist based on the in-game name. To 
     * Stealing other players' items.
     * Repeatedly harming/killing other players.
 
-3. **No server exploits.** Use of any server or Minecraft bugs is no allowed. Most client mods are allowed. **[Read here](hacks.md) if you plan to use hacked clients**. General rules about modding:
+3. **No server exploits.** Use of any server or Minecraft bugs is not allowed. Most client mods are allowed. **[Read here](hacks.md) for hacked clients**. General rules about modding:
     * Respect vanilla players.
     * No significant advantages over other players.
     * Make sure the server runs smoothly for all players.
