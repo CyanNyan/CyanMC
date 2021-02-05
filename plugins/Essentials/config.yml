@@ -88,10 +88,10 @@ force-safe-teleport-location: false
 teleport-passenger-dismount: true
 
 # The delay, in seconds, required between /home, /tp, etc.
-teleport-cooldown: 0
+teleport-cooldown: 120
 
 # The delay, in seconds, before a user actually teleports. If the user moves or gets attacked in this timeframe, the teleport is cancelled.
-teleport-delay: 0
+teleport-delay: 5
 
 # The delay, in seconds, a player can't be attacked by other players after they have been teleported by a command.
 # This will also prevent the player attacking other players.
@@ -417,7 +417,7 @@ debug: false
 #locale: en
 
 # Turn off god mode when people leave the server.
-remove-god-on-disconnect: false
+remove-god-on-disconnect: true
 
 # Auto-AFK
 # After this timeout in seconds, the user will be set as AFK.
@@ -569,7 +569,7 @@ last-message-reply-recipient-timeout: 180
 last-message-reply-vanished: false
 
 # Toggles whether or not left clicking mobs with a milk bucket turns them into a baby.
-milk-bucket-easter-egg: true
+milk-bucket-easter-egg: false
 
 # Toggles whether or not the fly status message should be sent to players on join
 send-fly-enable-on-join: true
@@ -616,8 +616,9 @@ delay-motd: 0
 # A list of commands that should have their complementary confirm commands enabled by default.
 # This is empty by default, for the latest list of valid commands see the latest source config.yml.
 default-enabled-confirm-commands:
-#- pay
-#- clearinventory
+- suicide
+- pay
+- clearinventory
 
 # Whether or not to teleport a player back to their previous position after they have been freed from jail.
 teleport-back-when-freed-from-jail: true
@@ -1035,11 +1036,13 @@ newbies:
 # Set this to lowest, if you want Multiverse to handle the respawning.
 # Set this to high, if you want EssentialsSpawn to handle the respawning.
 # Set this to highest, if you want to force EssentialsSpawn to handle the respawning.
+# Note: Changes will not apply until after the server is restarted.
 respawn-listener-priority: high
 
 # What priority should we use for handling spawning on joining the server?
 # See respawn-listener-priority for possible values.
-# Note: changing this may impact or break spawn-on-join functionality.
+# Note: Changing this may impact or break spawn-on-join functionality.
+# Note: Changes will not apply until after the server is restarted.
 spawn-join-listener-priority: high
 
 # When users die, should they respawn at their first home or bed, instead of the spawnpoint?

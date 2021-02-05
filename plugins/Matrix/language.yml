@@ -1,52 +1,53 @@
-#### MATRIX CONFIG FILE
-#                         MATRIX ANTI CHEAT
-#             file: language.yml  | Customize plugin languages here
+#### Matrix Config - language.yml ##################################################
 #
-# Links:
-#   1. Issue Tracker: https://github.com/jiangdashao/Matrix-Issues/issues
-#   2. SpigotMC Overview Page: https://www.spigotmc.org/resources/64635/
-#   3. bStats: https://bstats.org/plugin/bukkit/Matrix
-#   4. Discord Group: https://discord.gg/pEvY55J
+#     Hi, welcome to use Matrix anti-cheat, this is language.yml, which is used
+#  to define the display language of anti-cheat. Here you can define what message
+#  the anti-cheat displays.
 #
-# Contributors:
-#   Performance#1955: Report a lot of bugs and manage the Github issue tracker
-#   Zak#6435 & Alex#2237: Provide the test server and report some bugs
-#   Kruize#9138 & VariationTime#2942: Report a lot of bugs and test in the production environment
+#  - If you encounter any problems, please go to our official Discord
+#  group for help: https://discord.gg/pEvY55J
 #
-# Thanks for using Matrix! <3
+#  Anyway, thanks for using Matrix anticheat! ❤
+#
+#####################################################################################
 
-## Message Prefix
-# Description: How would you like the Matrix prefix formatted?
+# You can define the message prefix here
 prefix: '&7[&b~&7]&r '
 
-## Kick Message Format
-# Description: This is the message broadcast to the entire server when someone is kicked because of cheating!
+# Define the announcement message after the player is kicked out by anti-cheating
 kick-format: 'player %player% was kicked because of cheating!'
 
-## Broadcast a message when a player is kicked?
-# kick-broadcast: true
+# Should Matrix broadcast a message when a player is kicked?
 kick-broadcast: false
 
-## Spam Warning Message Format
-# Description: This is the message sent to a player who has triggered the ChatSpam check.
+# What message should send to the player when Matrix detects
+# that the player is sending chat messages too fast?
 spam-warning: 'You can''t chat that fast or send the same content over again!'
 
-## Verbose Messages
-# Description: How would you like the verbose messages formatted?
-# Default: '&7%player% failed &c%check% &7check &8| &7%message% &b(+%add_vl%) &8| &7vl:%vl% ping:%ping% tps:%tps%'
-verbose-format: '&7%player% failed &2%check% &7check &8| &7%message% &b(+%add_vl%) &8| &7vl:%vl% ping:%ping% tps:%tps% lp:%lp% component: %component%'
+# Define the format of the verbose message
+#
+#  What is "verbose message"?
+#    When the player is detected by Matrix for any cheating, Matrix will output a
+#    debugging message to display the detection information, which will be useful
+#    for developers to debug anti-cheat. You can toggle it with the "/matrix verbose"
+#    command, but usually you don’t need to read this message, it usually only needs
+#    to be used when reporting a bug.
+#
+verbose-format: '&7%player% failed &2%check% &7check &8| &7%message% &b(+%add_vl%) &8| &7vl:%vl% ping:%ping% tps:%tps% lp:%lp% component: %component% ver: %version%'
 
-## Relog message
+# Defines the message that matrix blocks it when the player tries to quickly
+# reconnect to the server after being kicked out by the anti-cheat
 relog-message: 'Please wait %time_left% seconds before logging back in!'
 
-## Global Placeholders
-# Define constants here, you can use them in checks.yml
-# example:
-# define -> kick_help: "If you think it's a false positive, you can contact the Mod to solve the false kick"
-# then you can use %gp_kick_help% in checks.yml, It will be automatically replaced with this sentence
+# Global Placeholders, you can define constants here, you can use them in checks.yml
+#
+#  For example, define:
+#     kick_help: "If you think it's a false positive, you can contact the Mod to solve the false kick"
+#  then you can use %gp_kick_help% in checks.yml, It will be automatically replaced with this sentence
+#
 global_placeholder: { }
 
-## Commands description
+# Define Commands description
 commands:
   verbose: 'Show/Hide Matrix verbose messages'
   notify: 'Send message to all online staff'
