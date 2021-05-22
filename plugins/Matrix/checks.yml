@@ -168,7 +168,7 @@ hitbox:
     enable: true
     expander: 10
     min_vl: 3
-    max_vl: 15
+    max_vl: 8
 
   # Violation Thresholds
   # number_of_violations: '<command>'
@@ -417,7 +417,7 @@ velocity:
 # Check prevents a player from spamming messages in the servers chat.
 chat:
   # Enable this check?
-  enable: true
+  enable: false
 
   # Minimum amount of time between messages (Seconds)
   min_time: 3
@@ -524,8 +524,8 @@ vehicle:
 
   # Prevent players from using certain creatures as vehicles
   # All entity types: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
-  deny_entity_types_as_vehicle:
-    - 'LLAMA'
+  deny_entity_types_as_vehicle: []
+    # - 'LLAMA'
 
   # Vehicle Speed/ Entity Speed
   speed:

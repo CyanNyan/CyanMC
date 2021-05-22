@@ -1,12 +1,14 @@
 name: owner
 permissions:
-- coreprotect.*
+- mv.bypass.gamemode.*
 - essentials.enchantments.*
 - essentials.potions.*
-- luckperms.*
 - multiverse.teleport.*
-- mv.bypass.gamemode.*
 - playervaults.amount.*
+- worldedit.clipboard.*
+- worldedit.schematic.*
+- coreprotect.*
+- luckperms.*
 - easywhitelist.admin
 - essentials.back
 - essentials.balance.others
@@ -16,10 +18,13 @@ permissions:
 - essentials.disposal
 - essentials.eco
 - essentials.enchant
+- essentials.essentials
 - essentials.gamemode
 - essentials.gamemode.all
 - essentials.gamemode.others
 - essentials.gc
+- essentials.god
+- essentials.god.others
 - essentials.home
 - essentials.home.bed
 - essentials.invsee
@@ -30,6 +35,7 @@ permissions:
 - essentials.list
 - essentials.ping
 - essentials.potion
+- essentials.reload
 - essentials.sethome
 - essentials.sethome.multiple
 - essentials.sethome.multiple.unlimited
@@ -50,17 +56,25 @@ permissions:
 - essentials.whois
 - inventoryrollback.forcebackup
 - inventoryrollback.restore
+- minecraft.command.data
+- minecraft.command.datapack
 - minecraft.command.effect
+- minecraft.command.gamerule
+- minecraft.command.kill
+- minecraft.command.selector
+- minecraft.command.setblock
+- minecraft.command.summon
 - multiverse.core.config
 - multiverse.core.import
 - multiverse.core.modify
 - multiverse.core.modify.set
 - multiverse.core.reload
 - multiverse.core.spawn.self
+- playerstatuebuilderx.bypass
 - playervaults.admin
 - weight.10
+- worldedit.history.undo
 - worldguard.region.bypass.lobby
 parents:
 - matrix
 - moderator
-- wgadmin
