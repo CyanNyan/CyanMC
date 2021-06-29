@@ -16,16 +16,18 @@ multiSuffix: "s"
 
 # What item will the dropped 'coin' (material) be? Find all materials at:
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
-coinItem: coin     # coin = sunflower
+coinItem: emerald     # coin = sunflower
 
 # Should the coin have an enchanted effect?
-enchantedCoin: false
+enchantedCoin: true
 
 # You can also set a custom texture for the coin, as skull. Filling this will disable 'coinItem'.
 # Find textures here (example): https://minecraft-heads.com/custom-heads/decoration/3005-money-bag
 # Input the string from "Other > Value" at the bottom of the page, it's a 'texture value'.
 # In case of the example, that would be the one starting with "eyJ0ZXh0dXJl[...]".
 skullTexture: ""
+
+# In case you need the UUID of the skull, it is: 00000001-0001-0001-0001-000000000002
 
 # This message is sent as action bar, telling the player how much money they have picked up.
 # The variable {$} will be replaced by the 'currencySymbol', default: $.
@@ -44,13 +46,13 @@ dropWithAnyDeath: false
 # However, if 'dropEachCoin' is set to true, killed mobs will drop 'from' to 'to' coins,
 # with each coin being worth $1. So by default it will drop 3 to 7 coins when 'dropEachCoin' is true.
 moneyAmount:
-  from: 3.0
-  to: 7.0
+  from: 0.03
+  to: 0.07
 
 # How many decimals should money have? Set to 0 for integers/rounded money (i.e. $3 $6 $8).
 # Value 1 (default) means i.e. $2.3 $5.8 $8.0, value of 2 means i.e. $5.23, $3.70, $6.99, etc.
 # This setting will be ignored (and set to 0) if 'dropEachCoin' is set to true.
-moneyDecimals: 1
+moneyDecimals: 2
 
 # Should coins be stacked? (Or should a coin be one on its own?)
 # Stacked coins don't act like one coin. The stack is counted and the worth is multiplied.
@@ -60,9 +62,9 @@ stackCoins: false
 
 # The minimum percentage of damage a player needs to deal to a mob to drop coins.
 # This can be useful for one-hit mob grinders that damage mobs by i.e. fall damage.
-# Value from 0.0 to 1.0: 0.0 meaning 0%, 1.0 meaning 100% (so 0.9 meaning 90%).
+# Value from 0.0 to 1.0: 0.0 meaning 0%, 1.0 meaning 100% (so 0.8 meaning 80%).
 # This feature does not work for Minecraft version 1.8.x.
-percentagePlayerHit: 0.9
+percentagePlayerHit: 0.8
 
 # Disable hoppers to pick up any kind of coins.
 disableHoppers: false
@@ -73,12 +75,13 @@ disableHoppers: false
 # You can find mob types via this URL (types that aren't creatures will be ignored):
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
 mobMultiplier:
-  ENDER_DRAGON: 50
-  WITHER: 20
-  PLAYER: 3
+  ENDER_DRAGON: 0
+  WITHER: 0
+  ELDER_GUARDIAN: 0
+  PLAYER: 0
 
 # When a player gets killed by another player, should (three; setting above) coins drop?
-playerDrop: true
+playerDrop: false
 
 # And should coins NOT drop when both players have the same ip address?
 # This means that no coin(s) will be dropped if both players are from the same computer.
@@ -109,7 +112,7 @@ soundVolume: 0.5
 
 # Chance of dropping a coin after a mob has been killed.
 # Value from 0.0 to 1.0: 0.0 meaning 0%, 1.0 meaning 100% (so 0.9 meaning 90%).
-dropChance: 0.9
+dropChance: 0.01
 
 # Set the amount of kills per location before coins stop dropping. Useful for overuse of grinders.
 # Default: 1, after 1 kill at X Y Z, it won't drop coins there for two hours. Disable by inputting 0.
@@ -133,14 +136,21 @@ enableWithdraw: true
 maxWithdrawAmount: 10000.0
 
 # Drop coins for mined blocks. What's the chance? (0.2 = 20% = 1 coin per 5 /experience/ blocks mined)
-minePercentage: 0.3
+minePercentage: 0.003
 
 # Only drop coins by the given chance for blocks that drop experience, like: lapis, iron, spawners.
 onlyExperienceBlocks: true
 
+# Put the amount of coins dropped for a specific block type here, by default: blocks drop one coin.
+# Keep in mind that this is only for the blocks that drop experience if 'onlyExperienceBlocks' is true.
+# Set a block type to 0 (i.e. 'COAL_ORE: 0') to disable coins for that specific type.
+# You can find block material types via this URL (input types that aren't blocks will be ignored):
+# https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+blockMultiplier: []
+
 # Should players lose money on death?
 # It shows a title (in the middle of the screen) how much they lost on death.
-loseOnDeath: true
+loseOnDeath: false
 
 # If so, how much will be taken? A random integer in between 10 and 30 by default.
 moneyTaken:

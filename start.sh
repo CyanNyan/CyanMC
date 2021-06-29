@@ -1,25 +1,42 @@
 #!/bin/bash
-# Minecraft Server Launcher v1.0
+
+# Minecraft Server Launcher v1.1
+# For Minecraft 1.17
 
 # set -xe
 
+if [ -f "config.env" ]; then
+  echo "** Load config from config.env"
+  cat config.env
+  source "config.env"
+fi
 
 # SERVER=velocity
-# VERSION=1.1.5
+# VERSION=1.1.8
+
+# SERVER=server
+
+# SERVER=geyser
+# VERSION=741
 
 # === Change Options ===
 SERVER="${SERVER:-paper}"
-VERSION="${VERSION:-1.16.5}"
-JVM_MEM="${JVM_MEM:--Xms3G -Xmx6G}"
-JVM_PARAMS="${JVM_PARAMS:--XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15}"
-# ===  End Options   ===
-
+VERSION="${VERSION:-1.17}"
+JVM_MEM="${JVM_MEM:--Xms3G -Xmx3G}"
+JVM_PARAMS="${JVM_PARAMS:--XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true}"
+# AUTHLIB_INJECTOR=ely.by
+AUTHLIB_INJECTOR_VERSION=1.1.38
+# ===   End Options   ===
 
 CACHE_DIR="cache"
 SERVER_JAR="$SERVER-$VERSION.jar"
+AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
 RCON_CONFIG="server.properties"
 MCRCON_ROOT="mcrcon"
 
+if [ -n "$AUTHLIB_INJECTOR" ]; then
+  JVM_PARAMS="$JVM_PARAMS -javaagent:$AUTHLIB_INJECTOR_JAR=$AUTHLIB_INJECTOR"
+fi
 
 case "$SERVER" in
     "velocity")
@@ -29,6 +46,9 @@ case "$SERVER" in
     "paper")
         API_PATH="https://papermc.io/api/v2/projects/paper"
         JAR_PARAMS="$JAR_PARAMS --nogui"
+        ;;
+    "geyser")
+        API_PATH="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/$VERSION/artifact/bootstrap/standalone/target"
         ;;
     "server")
         SERVER_JAR="server.jar"
@@ -52,8 +72,8 @@ _paper_check_update() {
     echo "Checking for paper updates..."
 
     # Check paper version
-    BUILD="$(_curl /versions/$VERSION | jq -r '.builds[-1]')"
-    DOWNLOAD="$(_curl /versions/$VERSION/builds/$BUILD | jq -r '.downloads.application.name')"
+    BUILD="$(_curl "/versions/$VERSION" | jq -r '.builds[-1]')"
+    DOWNLOAD="$(_curl "/versions/$VERSION/builds/$BUILD" | jq -r '.downloads.application.name')"
 
     echo "Latest version: $DOWNLOAD"
 
@@ -74,6 +94,14 @@ _velocity_check_update() {
     fi
 }
 
+_geyser_check_update() {
+    echo "Checking for Geyser jar..."
+    if [ ! -f "$SERVER_JAR" ]; then
+        echo "Downloading $SERVER_JAR"
+        _curl "/Geyser.jar" "$SERVER_JAR"
+    fi
+}
+
 _check_update() {
     case "$SERVER" in
     "velocity")
@@ -82,7 +110,17 @@ _check_update() {
     "paper")
         _paper_check_update
         ;;
+    "geyser")
+        _geyser_check_update
+        ;;
     esac
+    
+    if [ -n "$AUTHLIB_INJECTOR" ]; then
+      if [ ! -f "$AUTHLIB_INJECTOR_JAR" ]; then
+        echo "Downloading $AUTHLIB_INJECTOR_JAR..."
+        curl -fsSLO "https://github.com/yushijinhun/authlib-injector/releases/download/v$AUTHLIB_INJECTOR_VERSION/$AUTHLIB_INJECTOR_JAR"
+      fi
+    fi
 }
 
 _check_mcrcon() {
@@ -128,20 +166,18 @@ _console() {
 
     echo "mcrcon: $MCRCON"
 
-    "$MCRCON" -H "127.0.0.1" -P "$RCON_PORT" -p "$RCON_PASS" $@
+    "$MCRCON" -H "127.0.0.1" -P "$RCON_PORT" -p "$RCON_PASS" "$@"
 }
 
 main() {
     case "$1" in
         "console" | "con")
             shift
-            _console $@
+            _console "$@"
             exit
             ;;
         "eula")
-            if [ ! -f "eula.txt" ]; then
-                echo "eula=true" > "eula.txt"
-            fi
+            echo "eula=true" > "eula.txt"
             exit
             ;;
     esac
@@ -154,9 +190,9 @@ main() {
     echo "Starting server $SERVER_JAR..."
     echo "JVM memory option: $JVM_MEM"
     echo "JVM params: $JVM_PARAMS"
-    echo "JAR params: $JAR_PARAMS $@"
+    echo "JAR params: $JAR_PARAMS" "$@"
 
-    java $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS $@
+    java $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS "$@"
 }
 
-main $@
+main "$@"

@@ -64,6 +64,7 @@ permissions:
 - minecraft.command.selector
 - minecraft.command.setblock
 - minecraft.command.summon
+- minecraft.command.whitelist
 - multiverse.core.config
 - multiverse.core.import
 - multiverse.core.modify
