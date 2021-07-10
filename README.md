@@ -5,7 +5,7 @@ English | [中文说明](README_cn.md)
 Welcome to Cyan's Minecraft Server!
 
 * Server IP: cyannyan.com
-* Version: 1.17 (Java Edition, Server: [PaperMC](https://papermc.io/))
+* Version: 1.17.1 (Java Edition, Server: [PaperMC](https://papermc.io/))
 * Watch Cyan's stream!! [YouTube](https://cyannyan.com/youtube) | [Twitch](https://cyannyan.com/twitch)
 * Join the Cyan family: [Discord](https://cyannyan.com/discord) | [Telegram](https://cyannyan.com/telegram)
 

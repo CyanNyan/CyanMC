@@ -5,7 +5,7 @@
 欢迎加入赛小盐的 MC 服务器！
 
 * 服务器地址: cyannyan.com
-* 游戏版本: Java 1.17 （服务器：[PaperMC](https://papermc.io/)）
+* 游戏版本: Java 1.17.1 （服务器：[PaperMC](https://papermc.io/)）
 * Cyan 的频道 [YouTube](https://cyannyan.com/youtube) | [Twitch](https://cyannyan.com/twitch)
 * 小盐粒儿大家族 [Discord](https://cyannyan.com/discord) | [Telegram](https://cyannyan.com/telegram)
 
