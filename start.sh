@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Minecraft Server Launcher v1.1
-# For Minecraft 1.17
+# For Minecraft 1.17.1
 
 # set -xe
 
@@ -12,20 +12,15 @@ if [ -f "config.env" ]; then
 fi
 
 # SERVER=velocity
-# VERSION=1.1.8
-
-# SERVER=server
-
-# SERVER=geyser
-# VERSION=741
+# VERSION=3.0.1
 
 # === Change Options ===
 SERVER="${SERVER:-paper}"
-VERSION="${VERSION:-1.17}"
+VERSION="${VERSION:-1.17.1}"
 JVM_MEM="${JVM_MEM:--Xms3G -Xmx3G}"
 JVM_PARAMS="${JVM_PARAMS:--XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true}"
 # AUTHLIB_INJECTOR=ely.by
-AUTHLIB_INJECTOR_VERSION=1.1.38
+AUTHLIB_INJECTOR_VERSION=1.1.39
 # ===   End Options   ===
 
 CACHE_DIR="cache"
@@ -48,7 +43,8 @@ case "$SERVER" in
         JAR_PARAMS="$JAR_PARAMS --nogui"
         ;;
     "geyser")
-        API_PATH="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/$VERSION/artifact/bootstrap/standalone/target"
+        API_PATH="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master"
+        SERVER_JAR="geyser.jar"
         ;;
     "server")
         SERVER_JAR="server.jar"
@@ -73,6 +69,11 @@ _paper_check_update() {
 
     # Check paper version
     BUILD="$(_curl "/versions/$VERSION" | jq -r '.builds[-1]')"
+    if [ -z "$BUILD" ]; then
+        echo "!! Paper version check failed."
+        return
+    fi
+
     DOWNLOAD="$(_curl "/versions/$VERSION/builds/$BUILD" | jq -r '.downloads.application.name')"
 
     echo "Latest version: $DOWNLOAD"
@@ -96,10 +97,23 @@ _velocity_check_update() {
 
 _geyser_check_update() {
     echo "Checking for Geyser jar..."
-    if [ ! -f "$SERVER_JAR" ]; then
-        echo "Downloading $SERVER_JAR"
-        _curl "/Geyser.jar" "$SERVER_JAR"
+
+    # Check geyser version
+    BUILD="$(_curl "/api/json" | jq -r '.builds[0].number')"
+    if [ -z "$BUILD" ]; then
+        echo "!! Geyser version check failed."
+        return
     fi
+
+    DOWNLOAD="geyser-$BUILD.jar"
+    echo "Latest version: $BUILD"
+
+    if [ ! -f "$DOWNLOAD" ]; then
+        echo "Downloading $DOWNLOAD"
+        _curl "/$BUILD/artifact/bootstrap/standalone/target/Geyser.jar" "$DOWNLOAD"
+    fi
+
+    ln -sf "$DOWNLOAD" "$SERVER_JAR"
 }
 
 _check_update() {
@@ -114,7 +128,7 @@ _check_update() {
         _geyser_check_update
         ;;
     esac
-    
+
     if [ -n "$AUTHLIB_INJECTOR" ]; then
       if [ ! -f "$AUTHLIB_INJECTOR_JAR" ]; then
         echo "Downloading $AUTHLIB_INJECTOR_JAR..."
