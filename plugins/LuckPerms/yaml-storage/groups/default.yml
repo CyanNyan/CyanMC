@@ -1,6 +1,8 @@
 name: default
 permissions:
 - mv.bypass.gamemode.*
+- essentials.enchant.*
+- essentials.enchantments.*
 - bukkit.command.help:
     value: false
 - bukkit.command.plugins:
@@ -9,6 +11,7 @@ permissions:
     value: false
 - coins.withdraw
 - essentials.balance
+- essentials.enchant
 - essentials.msg
 - essentials.pay
 - essentials.suicide

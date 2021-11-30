@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Minecraft Server Launcher v1.1
-# For Minecraft 1.17.1, Velocity 3.1.0, GeyserMC
+# For Minecraft 1.17.1 Paper/Fabric, Velocity 3.1.0+, GeyserMC
 
 # set -xe
 
@@ -23,6 +23,9 @@ fi
 # JVM_MEM="-Xms128M -Xmx128M"
 # JVM_PARAMS="-XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15"
 
+# SERVER=fabric
+# VERSION=1.18-rc4
+
 # === Change Options ===
 JVM_MEM="${JVM_MEM:--Xms3G -Xmx3G}"
 JVM_PARAMS="${JVM_PARAMS:--XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true}"
@@ -35,6 +38,9 @@ SERVER_JAR="$SERVER-$VERSION.jar"
 AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
 RCON_CONFIG="server.properties"
 MCRCON_ROOT="mcrcon"
+FABRIC_DIR="fabric-$VERSION"
+FABRIC_INSTALLER_VERSION=0.9.1
+FABRIC_INSTALLER_JAR="fabric-installer-$FABRIC_INSTALLER_VERSION.jar"
 
 if [ -n "$AUTHLIB_INJECTOR" ]; then
   JVM_PARAMS="$JVM_PARAMS -javaagent:$AUTHLIB_INJECTOR_JAR=$AUTHLIB_INJECTOR"
@@ -54,6 +60,12 @@ case "$SERVER" in
         API_PATH="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master"
         SERVER_JAR="geyser.jar"
         ;;
+    "fabric")
+        API_PATH="https://maven.fabricmc.net/net/fabricmc/fabric-installer"
+        SERVER_JAR="$FABRIC_DIR/fabric-server-launch.jar"
+        JVM_PARAMS="$JVM_PARAMS -Dfabric.gameJarPath=$FABRIC_DIR/server.jar"
+        JAR_PARAMS="$JAR_PARAMS --nogui"
+        ;;
     "server")
         SERVER_JAR="server.jar"
         ;;
@@ -65,7 +77,7 @@ esac
 _curl() {
     if [ -n "$2" ]; then
         mkdir -p "$CACHE_DIR"
-        curl -fsSLo "$CACHE_DIR/$2.tmp" "${API_PATH}/$1"
+        curl -fsSLo "$CACHE_DIR/$2.tmp" "${API_PATH}$1"
         mv "$CACHE_DIR/$2.tmp" "$2"
     else
         curl -fsS "${API_PATH}$1"
@@ -115,6 +127,22 @@ _geyser_check_update() {
     ln -sf "$DOWNLOAD" "$SERVER_JAR"
 }
 
+_fabric_check_update() {
+    echo "Checking for fabric install..."
+
+    if [ ! -f "$FABRIC_INSTALLER_JAR" ]; then
+        echo "Downloading $FABRIC_INSTALLER_JAR"
+        _curl "/$FABRIC_INSTALLER_VERSION/$FABRIC_INSTALLER_JAR" "$FABRIC_INSTALLER_JAR"
+    fi
+
+    mkdir -p "$FABRIC_DIR"
+
+    if [ ! -f "$SERVER_JAR" ]; then
+        echo "Install fabric server"
+        java -jar "$FABRIC_INSTALLER_JAR" server -dir "$FABRIC_DIR" -mcversion "$VERSION" -downloadMinecraft
+    fi
+}
+
 _authlib_injector_check_update() {
     if [ ! -f "$AUTHLIB_INJECTOR_JAR" ]; then
         echo "Downloading $AUTHLIB_INJECTOR_JAR..."
@@ -129,6 +157,9 @@ _check_update() {
         ;;
     "geyser")
         _geyser_check_update
+        ;;
+    "fabric")
+        _fabric_check_update
         ;;
     esac
 
@@ -190,8 +221,8 @@ main() {
             _console "$@"
             exit
             ;;
-        "eula")
-            > "eula.txt" <<< "eula=true"
+        "eula" | "eula.txt")
+            echo "eula=true" > "eula.txt"
             exit
             ;;
     esac
