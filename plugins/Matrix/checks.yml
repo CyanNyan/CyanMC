@@ -48,6 +48,7 @@ killaura:
     # Check if the player shows aiming characteristics similar to aimbot
     aimbot:
       vl_weight: 7
+      cancel_hit: true
 
       check_aimbot_sync: true
       check_aimbot_shake: true
@@ -123,6 +124,11 @@ killaura:
           - 'hb.reach'
         action: 5 # +5 VL
 
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 5
+
   # Violation Thresholds
   # number_of_violations: '<command>'
   commands:
@@ -144,7 +150,7 @@ hitbox:
   trace_back_length: 8
 
   # Whether Matrix should cancel the player's attack after detecting the player's cheating?
-  # There are there choice:
+  # There are these choices:
   #  1. none   -  do nothing
   #  2. silent -  set damage to zero (Recommend)
   #  3. cancel -  cancel the attack
@@ -175,6 +181,11 @@ hitbox:
   # This option limits the maximum increase in VL in "5 seconds"
   max_burst_vl: 15
 
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 5
+
   # Violation Thresholds
   # number_of_violations: '<command>'
   commands:
@@ -203,6 +214,11 @@ click:
 
   # Click interval buffer size (Do not touch it!!!)
   buffer_size: 20
+
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 5
 
   # Violation Thresholds
   # number_of_violations: '<command>'
@@ -253,6 +269,11 @@ move:
   # Should Matrix teleport the player into the void if the player cheats on the void?
   allow_setback_to_void: false
 
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 10
+    amount: 45
+
   # Violation Thresholds
   # number_of_violations: '<command>'
   commands:
@@ -280,6 +301,11 @@ badpackets:
     # accelerate the growth of the balance, so that the timer can be detected faster
     accelerate_timer_check: true
 
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 25
+
   # Violation Thresholds
   # number_of_violations: '<command>'
   commands:
@@ -305,6 +331,11 @@ delay:
   check_inventory_action: -1
   check_auto_totem: -1
   check_fast_throw: 1
+
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 2
 
   # Violation Thresholds
   # number_of_violations: '<command>'
@@ -342,6 +373,11 @@ block:
     abort:
       enable: true
       vl_weight: 0
+
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 8
 
   # Violation Thresholds
   # number_of_violations: '<command>'
@@ -382,6 +418,11 @@ scaffold:
       enable: true
       vl_weight: 2
 
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 6
+
   # Violation Thresholds
   # number_of_violations: '<command>'
   commands:
@@ -402,6 +443,11 @@ jesus:
   # Should Matrix ignore whether player is in swimming?
   # This feature can prevent swimming status desync
   ignore_swim_pose: false
+
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 10
+    amount: 10
 
   # Violation Thresholds
   # number_of_violations: '<command>'
@@ -431,6 +477,11 @@ velocity:
     analyser: 3
     vertical: 1
 
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 3
+
   # Violation Thresholds
   # number_of_violations: '<command>'
   commands:
@@ -450,6 +501,11 @@ chat:
   # Violations needed to cancel sent messages (-1 = never cancel)
   cancel_vl: 3
 
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 30
+    amount: 5
+
   # Violation Thresholds
   # number_of_violations: '<command>'
   commands:
@@ -464,6 +520,11 @@ interact:
 
   check_interact_block: true
   check_attack: true
+
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 10
+    amount: 5
 
   # Violation Thresholds
   # number_of_violations: '<command>'
@@ -490,6 +551,11 @@ phase:
   # Exlude block types
   exclude_types: []
 
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 10
+
   # Violation Thresholds
   # number_of_violations: '<command>'
   commands:
@@ -502,6 +568,11 @@ phase:
 autobot:
   # Enable this check?
   enable: true
+
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 2
 
   # Violation Thresholds
   # number_of_violations: '<command>'
@@ -530,6 +601,11 @@ elytra:
   # If player reached this VL, Matrix will make it out of the gliding state (-1 = disable this feature)
   # unequip_vl: 20
   unequip_vl: -1
+
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 7
 
   # Violation Thresholds
   # number_of_violations: '<command>'
@@ -568,6 +644,11 @@ vehicle:
 
     # leave vehicle vl (-1 = never leave vehicle)
     leave_vehicle: 10
+
+  # Custom vl decay interval(seconds) and vl decay step size
+  decay:
+    interval: 15
+    amount: 5
 
   # Violation Thresholds
   # number_of_violations: '<command>'
