@@ -70,7 +70,7 @@ The server allows connection from Bedrock Edition via [GeyserMC](https://geyserm
 
 **You still need a Java Edition account to join!** Bedrock Edition compatibility is experimental and may be unstable.
 
-IP: mc.cyannyan.net  
+IP: mc.cyannyan.net
 Port: 19132 (default)
 
 ## Alts
