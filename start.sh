@@ -228,6 +228,14 @@ _console() {
     "$MCRCON_CMD" -H "127.0.0.1" -P "$RCON_PORT" -p "$RCON_PASS" "$@"
 }
 
+_systemd_stop() {
+    SERVER_PID="$1"
+    if [ -n "$SERVER_PID" ]; then
+        _console stop
+        tail --pid="$SERVER_PID" -f /dev/null
+    fi
+}
+
 main() {
     case "$1" in
         "console" | "con")
@@ -237,6 +245,11 @@ main() {
             ;;
         "eula" | "eula.txt")
             echo "eula=true" > "eula.txt"
+            exit
+            ;;
+        "systemd_stop")
+            shift
+            _systemd_stop "$@"
             exit
             ;;
     esac
