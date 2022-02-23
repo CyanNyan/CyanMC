@@ -18,60 +18,70 @@ fi
 
 # SERVER=paper
 # VERSION=1.17.1
+# AUTHLIB_INJECTOR=ely.by
 
 # SERVER=geyser
 # JVM_MEM="-Xms128M -Xmx128M"
-# JVM_PARAMS="-XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15"
 
 # SERVER=fabric
 # VERSION=1.18-rc4
 
-# === Change Options ===
 JVM_MEM="${JVM_MEM:--Xms3G -Xmx3G}"
-JVM_PARAMS="${JVM_PARAMS:--XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true}"
-# AUTHLIB_INJECTOR=ely.by
-AUTHLIB_INJECTOR_VERSION=1.1.40
-# ===   End Options   ===
+SERVER_JVM_PARAMS="-XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15"
+AIKARS_JVM_PARAMS="-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true"
+
+AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
+FABRIC_INSTALLER_JAR="fabric-installer-$FABRIC_INSTALLER_VERSION.jar"
 
 CACHE_DIR="cache"
-SERVER_JAR="$SERVER-$VERSION.jar"
-AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
-RCON_CONFIG="server.properties"
 MCRCON_ROOT="mcrcon"
 FABRIC_DIR="fabric-$VERSION"
-FABRIC_INSTALLER_VERSION=0.9.1
-FABRIC_INSTALLER_JAR="fabric-installer-$FABRIC_INSTALLER_VERSION.jar"
+RCON_CONFIG="server.properties"
+
+AUTHLIB_INJECTOR_VERSION=1.1.40  # https://github.com/yushijinhun/authlib-injector/releases
+FABRIC_INSTALLER_VERSION=0.10.2  # https://maven.fabricmc.net/net/fabricmc/fabric-installer/
+
+MCRCON_REPOSITORY="https://github.com/Tiiffi/mcrcon.git"
 
 if [ -n "$AUTHLIB_INJECTOR" ]; then
   JVM_PARAMS="$JVM_PARAMS -javaagent:$AUTHLIB_INJECTOR_JAR=$AUTHLIB_INJECTOR"
 fi
 
 case "$SERVER" in
-    "velocity")
-        API_PATH="https://papermc.io/api/v2/projects/velocity"
-        RCON_CONFIG="plugins/velocityrcon/rcon.toml"
-        SERVER_JAR="velocity.jar"
-        ;;
     "paper")
         API_PATH="https://papermc.io/api/v2/projects/paper"
-        JAR_PARAMS="$JAR_PARAMS --nogui"
-        ;;
-    "geyser")
-        API_PATH="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master"
-        SERVER_JAR="geyser.jar"
+        SERVER_JAR="$SERVER-$VERSION.jar"
+        JVM_PARAMS=${JVM_PARAMS:-$AIKARS_JVM_PARAMS}
+        JAR_PARAMS="$JAR_PARAMS --nogui --noconsole"
         ;;
     "fabric")
         API_PATH="https://maven.fabricmc.net/net/fabricmc/fabric-installer"
         SERVER_JAR="$FABRIC_DIR/fabric-server-launch.jar"
+        JVM_PARAMS=${JVM_PARAMS:-$AIKARS_JVM_PARAMS}
         JVM_PARAMS="$JVM_PARAMS -Dfabric.gameJarPath=$FABRIC_DIR/server.jar"
-        JAR_PARAMS="$JAR_PARAMS --nogui"
+        JAR_PARAMS="$JAR_PARAMS --nogui --noconsole"
+        ;;
+    "velocity")
+        API_PATH="https://papermc.io/api/v2/projects/velocity"
+        SERVER_JAR="velocity.jar"
+        JVM_PARAMS=${JVM_PARAMS:-$SERVER_JVM_PARAMS}
+        RCON_CONFIG="plugins/velocityrcon/rcon.toml"
+        ;;
+    "geyser")
+        API_PATH="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master"
+        JVM_PARAMS=${JVM_PARAMS:-$SERVER_JVM_PARAMS}
+        SERVER_JAR="geyser.jar"
         ;;
     "server")
         SERVER_JAR="server.jar"
+        JVM_PARAMS=${JVM_PARAMS:-$SERVER_JVM_PARAMS}
+        ;;
+    "hmcl")
+        SERVER_JAR="HMCL-$VERSION.jar"
         ;;
     *)
         echo "Unrecognized server type: $SERVER"
-        exit 1
+        exit 127
 esac
 
 _curl() {
@@ -85,7 +95,7 @@ _curl() {
 }
 
 _paper_check_update() {
-    echo "Checking for paper updates..."
+    echo "Checking for paper/velocity updates..."
 
     # Check paper version
     BUILD="$(_curl "/versions/$VERSION" | jq -r '.builds[-1]')"
@@ -146,7 +156,14 @@ _fabric_check_update() {
 _authlib_injector_check_update() {
     if [ ! -f "$AUTHLIB_INJECTOR_JAR" ]; then
         echo "Downloading $AUTHLIB_INJECTOR_JAR..."
-        curl -fsSLO "https://github.com/yushijinhun/authlib-injector/releases/download/v$AUTHLIB_INJECTOR_VERSION/$AUTHLIB_INJECTOR_JAR"
+        curl -fsSLo "$AUTHLIB_INJECTOR_JAR" "https://github.com/yushijinhun/authlib-injector/releases/download/v$AUTHLIB_INJECTOR_VERSION/$AUTHLIB_INJECTOR_JAR"
+    fi
+}
+
+_hmcl_check_update() {
+    if [ ! -f "$SERVER_JAR" ]; then
+        echo "Downloading $SERVER_JAR..."
+        curl -fsSLo "$SERVER_JAR" "https://github.com/huanghongxun/HMCL/releases/download/v$VERSION/HMCL-$VERSION.jar"
     fi
 }
 
@@ -161,6 +178,9 @@ _check_update() {
     "fabric")
         _fabric_check_update
         ;;
+    "hmcl")
+        _hmcl_check_update
+        ;;
     esac
 
     if [ -n "$AUTHLIB_INJECTOR" ]; then
@@ -171,17 +191,17 @@ _check_update() {
 _check_mcrcon() {
     # Check and install mcrcon command
     if command -v mcrcon &> /dev/null; then
+        MCRCON_CMD="mcrcon"
         return
     fi
 
-    if [ -x "$MCRCON_ROOT/mcrcon" ]; then
-        return
+    MCRCON_CMD="$MCRCON_ROOT/mcrcon"
+    if [ ! -x "$MCRCON_CMD" ]; then
+        echo "mcrcon is not installed, trying to install ..."
+
+        git clone "$MCRCON_REPOSITORY" "$MCRCON_ROOT"
+        make -C "$MCRCON_ROOT"
     fi
-
-    echo "mcrcon is not installed, trying to install ..."
-
-    git clone https://github.com/Tiiffi/mcrcon.git "$MCRCON_ROOT"
-    make -C "$MCRCON_ROOT"
 }
 
 _console() {
@@ -203,15 +223,9 @@ _console() {
     fi
 
     _check_mcrcon
+    echo "mcrcon: $MCRCON_CMD"
 
-    MCRCON="mcrcon"
-    if [ -x "$MCRCON_ROOT/mcrcon" ]; then
-        MCRCON="$MCRCON_ROOT/mcrcon"
-    fi
-
-    echo "mcrcon: $MCRCON"
-
-    "$MCRCON" -H "127.0.0.1" -P "$RCON_PORT" -p "$RCON_PASS" "$@"
+    "$MCRCON_CMD" -H "127.0.0.1" -P "$RCON_PORT" -p "$RCON_PASS" "$@"
 }
 
 main() {
@@ -237,7 +251,7 @@ main() {
     echo "JVM params: $JVM_PARAMS"
     echo "JAR params: $JAR_PARAMS" "$@"
 
-    java $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS "$@"
+    exec java $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS "$@"
 }
 
 main "$@"
