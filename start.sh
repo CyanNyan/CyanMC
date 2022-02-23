@@ -211,7 +211,10 @@ _check_mcrcon() {
 }
 
 _console() {
-    if [[ "$RCON_CONFIG" == *.properties ]]; then
+    if [ ! -f "$RCON_CONFIG" ]; then
+        echo "rcon is not configured in $RCON_CONFIG!"
+        return 1
+    elif [[ "$RCON_CONFIG" == *.properties ]]; then
         # server.properties config
         RCON_ENABLED="$(sed -nE 's/enable-rcon=(.+)/\1/gp' $RCON_CONFIG)"
         RCON_PORT="$(sed -nE 's/rcon.port=(.+)/\1/gp' $RCON_CONFIG)"
@@ -225,7 +228,7 @@ _console() {
 
     if [ "$RCON_ENABLED" != "true" ]; then
         echo "rcon is not enabled in $RCON_CONFIG!"
-        exit 1
+        return 1
     fi
 
     _check_mcrcon
@@ -237,7 +240,7 @@ _console() {
 _systemd_stop() {
     SERVER_PID="$1"
     if [ -n "$SERVER_PID" ]; then
-        echo "Terminating $SERVER_PID..."
+        echo "Terminating server, PID=$SERVER_PID..."
 
         # Try to use rcon first, otherwise send SIGINT
         _console stop || kill -SIGINT "$SERVER_PID"

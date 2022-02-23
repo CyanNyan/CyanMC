@@ -14,6 +14,7 @@ Type=simple
 
 ExecStart=/usr/local/opt/CyanMC/start.sh
 ExecStop=/usr/local/opt/CyanMC/start.sh systemd_stop $MAINPID
+SuccessExitStatus=0 130
 
 Restart=always
 RestartSec=15s
