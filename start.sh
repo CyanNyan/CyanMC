@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Minecraft Server Launcher v1.1
-# For Minecraft 1.17.1 Paper/Fabric, Velocity 3.1.0+, GeyserMC
+# For Minecraft 1.17.1+ Paper/Fabric, Velocity 3.1.0+, GeyserMC
 
 # set -xe
 
@@ -30,9 +30,6 @@ JVM_MEM="${JVM_MEM:--Xms3G -Xmx3G}"
 SERVER_JVM_PARAMS="-XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15"
 AIKARS_JVM_PARAMS="-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true"
 
-AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
-FABRIC_INSTALLER_JAR="fabric-installer-$FABRIC_INSTALLER_VERSION.jar"
-
 CACHE_DIR="cache"
 MCRCON_ROOT="mcrcon"
 FABRIC_DIR="fabric-$VERSION"
@@ -40,6 +37,9 @@ RCON_CONFIG="server.properties"
 
 AUTHLIB_INJECTOR_VERSION=1.1.40  # https://github.com/yushijinhun/authlib-injector/releases
 FABRIC_INSTALLER_VERSION=0.10.2  # https://maven.fabricmc.net/net/fabricmc/fabric-installer/
+
+AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
+FABRIC_INSTALLER_JAR="fabric-installer-$FABRIC_INSTALLER_VERSION.jar"
 
 MCRCON_REPOSITORY="https://github.com/Tiiffi/mcrcon.git"
 
@@ -59,7 +59,7 @@ case "$SERVER" in
         SERVER_JAR="$FABRIC_DIR/fabric-server-launch.jar"
         JVM_PARAMS=${JVM_PARAMS:-$AIKARS_JVM_PARAMS}
         JVM_PARAMS="$JVM_PARAMS -Dfabric.gameJarPath=$FABRIC_DIR/server.jar"
-        JAR_PARAMS="$JAR_PARAMS --nogui --noconsole"
+        JAR_PARAMS="$JAR_PARAMS --nogui"
         ;;
     "velocity")
         API_PATH="https://papermc.io/api/v2/projects/velocity"
@@ -96,6 +96,12 @@ _curl() {
 
 _paper_check_update() {
     echo "Checking for paper/velocity updates..."
+
+    if [ -n "$VERSION_GROUP" ]; then
+        VERSION="$(_curl "/version_group/$VERSION_GROUP/builds" | jq -r '.builds[-1].version')"
+        SERVER_JAR="$SERVER-$VERSION.jar"
+        echo "Latest version number: $VERSION"
+    fi
 
     # Check paper version
     BUILD="$(_curl "/versions/$VERSION" | jq -r '.builds[-1]')"
@@ -231,29 +237,19 @@ _console() {
 _systemd_stop() {
     SERVER_PID="$1"
     if [ -n "$SERVER_PID" ]; then
-        _console stop
+        echo "Terminating $SERVER_PID..."
+
+        # Try to use rcon first, otherwise send SIGINT
+        _console stop || kill -SIGINT "$SERVER_PID"
+
+        # Wait for process to exit
         tail --pid="$SERVER_PID" -f /dev/null
+    else
+        echo '$MAINPID is empty, skipping.'
     fi
 }
 
-main() {
-    case "$1" in
-        "console" | "con")
-            shift
-            _console "$@"
-            exit
-            ;;
-        "eula" | "eula.txt")
-            echo "eula=true" > "eula.txt"
-            exit
-            ;;
-        "systemd_stop")
-            shift
-            _systemd_stop "$@"
-            exit
-            ;;
-    esac
-
+_run_server() {
     if ! _check_update; then
         echo "Failed to check update for $SERVER"
     fi
@@ -265,6 +261,25 @@ main() {
     echo "JAR params: $JAR_PARAMS" "$@"
 
     exec java $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS "$@"
+}
+
+main() {
+    case "$1" in
+        "console" | "con")
+            shift
+            _console "$@"
+            ;;
+        "eula" | "eula.txt")
+            echo "eula=true" > "eula.txt"
+            ;;
+        "systemd_stop")
+            shift
+            _systemd_stop "$@"
+            ;;
+        *)
+            _run_server
+            ;;
+    esac
 }
 
 main "$@"
