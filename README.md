@@ -5,15 +5,18 @@ English | [中文说明](README_cn.md)
 Welcome to Cyan's Minecraft Server!
 
 * Server IP: cyannyan.com
-* Version: 1.18.1 (Java Edition, Server: [PaperMC](https://papermc.io/))
+* Version: **1.18.1** (Java Edition, Server: [PaperMC](https://papermc.io/))
 * Watch Cyan's stream!! [YouTube](https://cyannyan.com/youtube) | [Twitch](https://cyannyan.com/twitch)
 * Join the Cyan family: [Discord](https://cyannyan.com/discord) | [Telegram](https://cyannyan.com/telegram)
+* Difficulty: easy on survival, hard on event servers.
 
 Cyan's Minecraft server is a vanilla survival Minecraft server created since Minecraft 1.16.4 (The Nether Update!) It is mainly used for Cyan's streams and for fans to gather and have some fun!
 
 The server has **online mode on** and a whitelist based on the in-game name. To join the server, read the rules and participate in Cyan's discussion groups.
 
 If you play **Bedrock Edition (mobile/console)**, read the Bedrock Edition section.
+
+If you are joining Cyan's event, please read the Event section.
 
 ## Rules
 
@@ -38,9 +41,15 @@ If you play **Bedrock Edition (mobile/console)**, read the Bedrock Edition secti
 
 4. Builds or entities that impact the server performance or cause lags to other players may be asked to remove.
 
+## Events
+
+Server will occasionally host special events in a separate server. To switch servers, run the command `/server <name>`. (For example, `/server oneblock`) To switch back to the main survival server, run `/server survival`.
+
+Events are usually temporary and server will close after event ends.
+
 ## Build protection
 
-The server has a protection plugin to protect Cyan's builds and streams. Build is suggested in certain allowed areas listed below.
+The server has a protection plugin to protect Cyan's builds and streams. Build is suggested (but not limited) in certain allowed areas listed below. Feel free to explore the map and find new areas to build! But the suggestion is set in order to keep the world file reasonably small, and prepare for future upgrades.
 
 Suggested build areas:
 * Overworld:
@@ -49,8 +58,6 @@ Suggested build areas:
 * Nether:
     * (x=-300,z=-300) ~ (x=4000,z=4000)
 * The End: Open to all
-
-The suggestion is set in order to keep the world file reasonably small, and prepare for future upgrades.
 
 ## Members
 
