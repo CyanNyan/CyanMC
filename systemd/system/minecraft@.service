@@ -8,8 +8,10 @@ ConditionPathExists=/etc/minecraft-%i.env
 StateDirectory=minecraft-%i
 WorkingDirectory=%S/minecraft-%i
 EnvironmentFile=/etc/minecraft-%i.env
+SyslogIdentifier=minecraft-%i
 DynamicUser=yes
 ProtectHome=yes
+PrivateDevice=yes
 Type=simple
 
 ExecStart=/usr/local/opt/CyanMC/start.sh

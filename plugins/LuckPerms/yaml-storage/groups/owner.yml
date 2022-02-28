@@ -63,6 +63,7 @@ permissions:
 - minecraft.command.kill
 - minecraft.command.selector
 - minecraft.command.setblock
+- minecraft.command.stop
 - minecraft.command.summon
 - minecraft.command.whitelist
 - multiverse.core.config

@@ -5,9 +5,10 @@
 欢迎加入赛小盐的 MC 服务器！
 
 * 服务器地址: cyannyan.com
-* 游戏版本: Java 1.18.1 （服务器：[PaperMC](https://papermc.io/)）
+* 游戏版本: Java **1.18.1** （服务器：[PaperMC](https://papermc.io/)）
 * Cyan 的频道 [YouTube](https://cyannyan.com/youtube) | [Twitch](https://cyannyan.com/twitch)
 * 小盐粒儿大家族 [Discord](https://cyannyan.com/discord) | [Telegram](https://cyannyan.com/telegram)
+* 难度：生存服简单，活动服困难
 
 赛小盐的 MC 服务器是一个原版的生存服，没有加任何 mod（除了领地保护和经济系统），使用最新的客户端即可登陆，地图版本为 1.16.4。这也是小盐直播的服务器，粉丝们都可以加入，但是只有在允许交互的区域内才可以建设。
 
@@ -30,6 +31,12 @@
     * 不要破坏其他玩家体验
 
 4. **建筑不要影响服务器的性能。** 影响服务器性能、降低其他玩家体验的的建筑、机器、红石电路等都可能被拆除。
+
+## 活动
+
+加入小盐的活动服，请运行命令 `/server <名字>`，比如：`/server oneblock`。如果需要返回生存服，运行 `/server survival`。
+
+活动服一般会在活动结束后关闭。
 
 ## 领地保护
 
