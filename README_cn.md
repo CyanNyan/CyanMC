@@ -5,7 +5,7 @@
 欢迎加入赛小盐的 MC 服务器！
 
 * 服务器地址: cyannyan.com
-* 游戏版本: Java **1.18.1** （服务器：[PaperMC](https://papermc.io/)）
+* 游戏版本: Java **1.18.2** （服务器：[PaperMC](https://papermc.io/)）
 * Cyan 的频道 [YouTube](https://cyannyan.com/youtube) | [Twitch](https://cyannyan.com/twitch)
 * 小盐粒儿大家族 [Discord](https://cyannyan.com/discord) | [Telegram](https://cyannyan.com/telegram)
 * 难度：生存服简单，活动服困难
@@ -14,7 +14,7 @@
 
 服务器开启正版验证，请先阅读以下的规则，然后在赛小盐的讨论群组内申请加入白名单。
 
-基岩版（手机版/主机版）玩家，请阅读基岩版的说明。
+基岩版（手机版/主机版）玩家，请阅读基岩版的说明。如果需要创建非官方小号，或者不想登陆微软账号，请阅读第三方平台登陆的说明。
 
 ## 服务器规则
 

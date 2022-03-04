@@ -4,7 +4,7 @@ We do not encourage the use of any hacked clients (or cheat clients, utility mod
 
 Please let the admin know what client you will be using when asking for whitelist! Otherwise you will be temp banned until you clerify about the hacks.
 
-**Please DO NOT use hacks on event servers!** Events usually has a fun challenge and using hacks ruin the fun.
+**Please consider not use hacks on event servers!** Events are usually more fun without hacking.
 
 If you are familiar with hacked clients and often play with it, please be careful when using it. This is not an anarchy server! If basic rules are not followed, or if other players complain about cheating and ruining the fun, **You will be banned from the server.**
 * Always verify the source before downloading and installing anything.
@@ -16,7 +16,9 @@ If you are familiar with hacked clients and often play with it, please be carefu
 * Never encourage other players to use hacked clients. (Discussion on discord is allowed.)
 
 
-The server has an [anticheat plugin](https://matrix.rip) that block many forms of hacks. Try turning off these functions if you are unable to move or perform certain actions. **Blocked hacks examples**:
+~~The server has an anticheat plugin that block many forms of hacks~~. Anti cheat is no more due to the maintenance overhead, but please do not use any hacks other than client modification.
+
+Not allowed hacks example:
 
 * Fastbreak/Fastplace
 * Speed/Fly/Highjump/Vehicle flight

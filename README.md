@@ -5,7 +5,7 @@ English | [中文说明](README_cn.md)
 Welcome to Cyan's Minecraft Server!
 
 * Server IP: cyannyan.com
-* Version: **1.18.1** (Java Edition, Server: [PaperMC](https://papermc.io/))
+* Version: **1.18.2** (Java Edition, Server: [PaperMC](https://papermc.io/))
 * Watch Cyan's stream!! [YouTube](https://cyannyan.com/youtube) | [Twitch](https://cyannyan.com/twitch)
 * Join the Cyan family: [Discord](https://cyannyan.com/discord) | [Telegram](https://cyannyan.com/telegram)
 * Difficulty: easy on survival, hard on event servers.
@@ -14,7 +14,7 @@ Cyan's Minecraft server is a vanilla survival Minecraft server created since Min
 
 The server has **online mode on** and a whitelist based on the in-game name. To join the server, read the rules and participate in Cyan's discussion groups.
 
-If you play **Bedrock Edition (mobile/console)**, read the Bedrock Edition section.
+If you play **Bedrock Edition (mobile/console)**, read the Bedrock Edition section. If you want an unofficial alt account or do not want a Microsoft account to play, read the **Alts** section.
 
 If you are joining Cyan's event, please read the Event section.
 
