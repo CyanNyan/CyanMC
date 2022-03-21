@@ -256,14 +256,20 @@ _scheduled_restart() {
     RESTART_SEC="$1"
 
     echo "Minecraft is scheduled to restart in $RESTART_SEC seconds!"
-    _console "broadcast Server restarting in $RESTART_SEC seconds!!"
-    _console "broadcast Server restarting in $RESTART_SEC seconds!!"
 
+    _console "broadcast Server restarting in $RESTART_SEC seconds!!"
+    _console "broadcast Server restarting in $RESTART_SEC seconds!!"
     sleep "$(( RESTART_SEC - 30 ))"
+
     echo "Minecraft is scheduled to restart in 30 seconds!"
     _console "broadcast Server restarting in 30 seconds!!!"
+    sleep 25
 
-    sleep 30
+    for i in {5..1}; do
+        _console "broadcast Server restarting in $i..."
+        sleep 1
+    done
+
     _console stop
 }
 
