@@ -35,7 +35,7 @@ MCRCON_ROOT="mcrcon"
 FABRIC_DIR="fabric-$VERSION"
 RCON_CONFIG="server.properties"
 
-AUTHLIB_INJECTOR_VERSION=1.1.40  # https://github.com/yushijinhun/authlib-injector/releases
+AUTHLIB_INJECTOR_VERSION=1.1.42  # https://github.com/yushijinhun/authlib-injector/releases
 FABRIC_INSTALLER_VERSION=0.10.2  # https://maven.fabricmc.net/net/fabricmc/fabric-installer/
 
 AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
