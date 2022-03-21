@@ -252,6 +252,21 @@ _systemd_stop() {
     fi
 }
 
+_scheduled_restart() {
+    RESTART_SEC="$1"
+
+    echo "Minecraft is scheduled to restart in $RESTART_SEC seconds!"
+    _console "broadcast Server restarting in $RESTART_SEC seconds!!"
+    _console "broadcast Server restarting in $RESTART_SEC seconds!!"
+
+    sleep "$(( RESTART_SEC - 30 ))"
+    echo "Minecraft is scheduled to restart in 30 seconds!"
+    _console "broadcast Server restarting in 30 seconds!!!"
+
+    sleep 30
+    _console stop
+}
+
 _run_server() {
     if ! _check_update; then
         echo "Failed to check update for $SERVER"
@@ -278,6 +293,10 @@ main() {
         "systemd_stop")
             shift
             _systemd_stop "$@"
+            ;;
+        "scheduled_restart")
+            shift
+            _scheduled_restart "$@"
             ;;
         *)
             _run_server
