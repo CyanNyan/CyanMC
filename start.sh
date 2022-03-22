@@ -26,6 +26,7 @@ fi
 # SERVER=fabric
 # VERSION=1.18-rc4
 
+JAVA="${JAVA:-java}"
 JVM_MEM="${JVM_MEM:--Xms3G -Xmx3G}"
 SERVER_JVM_PARAMS="-XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15"
 AIKARS_JVM_PARAMS="-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true"
@@ -37,6 +38,7 @@ RCON_CONFIG="server.properties"
 
 AUTHLIB_INJECTOR_VERSION=1.1.42  # https://github.com/yushijinhun/authlib-injector/releases
 FABRIC_INSTALLER_VERSION=0.10.2  # https://maven.fabricmc.net/net/fabricmc/fabric-installer/
+HMCL_VERSION=3.5.2.218  # https://github.com/huanghongxun/HMCL/releases
 
 AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
 FABRIC_INSTALLER_JAR="fabric-installer-$FABRIC_INSTALLER_VERSION.jar"
@@ -47,30 +49,31 @@ if [ -n "$AUTHLIB_INJECTOR" ]; then
   JVM_PARAMS="$JVM_PARAMS -javaagent:$AUTHLIB_INJECTOR_JAR=$AUTHLIB_INJECTOR"
 fi
 
+if [ -z "$HOME" ]; then
+  JVM_PARAMS="$JVM_PARAMS -Duser.home=."
+fi
+
 case "$SERVER" in
     "paper")
-        API_PATH="https://papermc.io/api/v2/projects/paper"
         SERVER_JAR="$SERVER-$VERSION.jar"
         JVM_PARAMS=${JVM_PARAMS:-$AIKARS_JVM_PARAMS}
-        JAR_PARAMS="$JAR_PARAMS --nogui --noconsole"
+        JAR_PARAMS="$JAR_PARAMS --nogui"
         ;;
     "fabric")
-        API_PATH="https://maven.fabricmc.net/net/fabricmc/fabric-installer"
         SERVER_JAR="$FABRIC_DIR/fabric-server-launch.jar"
         JVM_PARAMS=${JVM_PARAMS:-$AIKARS_JVM_PARAMS}
         JVM_PARAMS="$JVM_PARAMS -Dfabric.gameJarPath=$FABRIC_DIR/server.jar"
         JAR_PARAMS="$JAR_PARAMS --nogui"
         ;;
     "velocity")
-        API_PATH="https://papermc.io/api/v2/projects/velocity"
         SERVER_JAR="velocity.jar"
         JVM_PARAMS=${JVM_PARAMS:-$SERVER_JVM_PARAMS}
         RCON_CONFIG="plugins/velocityrcon/rcon.toml"
         ;;
     "geyser")
-        API_PATH="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master"
         JVM_PARAMS=${JVM_PARAMS:-$SERVER_JVM_PARAMS}
         SERVER_JAR="geyser.jar"
+        JAR_PARAMS="$JAR_PARAMS --nogui"
         ;;
     "server")
         SERVER_JAR="server.jar"
@@ -78,6 +81,7 @@ case "$SERVER" in
         ;;
     "hmcl")
         SERVER_JAR="HMCL-$VERSION.jar"
+        VERSION="${VERSION:-$HMCL_VERSION}"
         ;;
     *)
         echo "Unrecognized server type: $SERVER"
@@ -97,7 +101,11 @@ _curl() {
 _paper_check_update() {
     echo "Checking for paper/velocity updates..."
 
+    API_PATH="https://papermc.io/api/v2/projects/paper"
+
+    # Check version group
     if [ -n "$VERSION_GROUP" ]; then
+        echo "Check for version group $VERSION_GROUP..."
         VERSION="$(_curl "/version_group/$VERSION_GROUP/builds" | jq -r '.builds[-1].version')"
         SERVER_JAR="$SERVER-$VERSION.jar"
         echo "Latest version number: $VERSION"
@@ -112,7 +120,7 @@ _paper_check_update() {
 
     DOWNLOAD="$(_curl "/versions/$VERSION/builds/$BUILD" | jq -r '.downloads.application.name')"
 
-    echo "Latest version: $DOWNLOAD"
+    echo "Latest version: $BUILD"
 
     if [ ! -f "$DOWNLOAD" ]; then
         echo "Downloading $DOWNLOAD..."
@@ -122,8 +130,8 @@ _paper_check_update() {
     ln -sf "$DOWNLOAD" "$SERVER_JAR"
 }
 
-_geyser_check_update() {
-    echo "Checking for Geyser jar..."
+_jenkins_check_update() {
+    echo "Checking for Geyser updates..."
 
     # Check geyser version
     BUILD="$(_curl "/api/json" | jq -r '.builds[0].number')"
@@ -132,19 +140,28 @@ _geyser_check_update() {
         return
     fi
 
+    if [ -n "$1" ]; then
+      RELATIVE_PATH="$(_curl "/$BUILD/api/json" | jq -r ".artifacts[] | select( .fileName == \"$1\" ).relativePath")"
+    else
+      RELATIVE_PATH="$(_curl "/$BUILD/api/json" | jq -r '.artifacts[0].relativePath')"
+    fi
+
     DOWNLOAD="geyser-$BUILD.jar"
     echo "Latest version: $BUILD"
+    echo "Jenkins artifact path: $RELATIVE_PATH"
 
     if [ ! -f "$DOWNLOAD" ]; then
         echo "Downloading $DOWNLOAD"
-        _curl "/$BUILD/artifact/bootstrap/standalone/target/Geyser.jar" "$DOWNLOAD"
+        _curl "/$BUILD/artifact/$RELATIVE_PATH" "$DOWNLOAD"
     fi
 
     ln -sf "$DOWNLOAD" "$SERVER_JAR"
 }
 
 _fabric_check_update() {
-    echo "Checking for fabric install..."
+    echo "Checking for fabric installer $FABRIC_INSTALLER_VERSION..."
+
+    API_PATH="https://maven.fabricmc.net/net/fabricmc/fabric-installer"
 
     if [ ! -f "$FABRIC_INSTALLER_JAR" ]; then
         echo "Downloading $FABRIC_INSTALLER_JAR"
@@ -154,8 +171,8 @@ _fabric_check_update() {
     mkdir -p "$FABRIC_DIR"
 
     if [ ! -f "$SERVER_JAR" ]; then
-        echo "Install fabric server"
-        java -jar "$FABRIC_INSTALLER_JAR" server -dir "$FABRIC_DIR" -mcversion "$VERSION" -downloadMinecraft
+        echo "Install fabric server..."
+        "$JAVA" -jar "$FABRIC_INSTALLER_JAR" server -dir "$FABRIC_DIR" -mcversion "$VERSION" -downloadMinecraft
     fi
 }
 
@@ -179,7 +196,8 @@ _check_update() {
         _paper_check_update
         ;;
     "geyser")
-        _geyser_check_update
+        API_PATH="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master"
+        _jenkins_check_update "Geyser.jar"
         ;;
     "fabric")
         _fabric_check_update
@@ -284,7 +302,12 @@ _run_server() {
     echo "JVM params: $JVM_PARAMS"
     echo "JAR params: $JAR_PARAMS" "$@"
 
-    exec java $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS "$@"
+    # If script is called by systemd, let it fork
+    if [ -n "$INVOCATION_ID" ]; then
+      "$JAVA" $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS "$@" &
+    else
+      exec "$JAVA" $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS "$@"
+    fi
 }
 
 main() {
