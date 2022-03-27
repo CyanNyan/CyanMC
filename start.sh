@@ -101,7 +101,7 @@ _curl() {
 _paper_check_update() {
     echo "Checking for paper/velocity updates..."
 
-    API_PATH="https://papermc.io/api/v2/projects/paper"
+    API_PATH="https://papermc.io/api/v2/projects/$SERVER"
 
     # Check version group
     if [ -n "$VERSION_GROUP" ]; then
