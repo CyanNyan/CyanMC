@@ -36,9 +36,9 @@ MCRCON_ROOT="mcrcon"
 FABRIC_DIR="fabric-$VERSION"
 RCON_CONFIG="server.properties"
 
-AUTHLIB_INJECTOR_VERSION=1.1.42  # https://github.com/yushijinhun/authlib-injector/releases
-FABRIC_INSTALLER_VERSION=0.10.2  # https://maven.fabricmc.net/net/fabricmc/fabric-installer/
-HMCL_VERSION=3.5.2.218  # https://github.com/huanghongxun/HMCL/releases
+AUTHLIB_INJECTOR_VERSION=1.1.45  # https://github.com/yushijinhun/authlib-injector/releases
+FABRIC_INSTALLER_VERSION=0.11.0  # https://maven.fabricmc.net/net/fabricmc/fabric-installer/
+HMCL_VERSION=3.5.3.221  # https://github.com/huanghongxun/HMCL/releases
 
 AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
 FABRIC_INSTALLER_JAR="fabric-installer-$FABRIC_INSTALLER_VERSION.jar"
@@ -261,7 +261,7 @@ _systemd_stop() {
         echo "Terminating server, PID=$SERVER_PID..."
 
         # Try to use rcon first, otherwise send SIGINT
-        _console stop || kill -SIGINT "$SERVER_PID"
+        _console stop || kill -SIGTERM "$SERVER_PID"
 
         # Wait for process to exit
         tail --pid="$SERVER_PID" -f /dev/null
