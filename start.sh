@@ -80,8 +80,8 @@ case "$SERVER" in
         JVM_PARAMS=${JVM_PARAMS:-$SERVER_JVM_PARAMS}
         ;;
     "hmcl")
-        SERVER_JAR="HMCL-$VERSION.jar"
         VERSION="${VERSION:-$HMCL_VERSION}"
+        SERVER_JAR="HMCL-$VERSION.jar"
         ;;
     *)
         echo "Unrecognized server type: $SERVER"
