@@ -1,0 +1,5 @@
+name: gc
+permissions:
+- essentials.broadcast
+- essentials.gc
+- minecraft.command.stop

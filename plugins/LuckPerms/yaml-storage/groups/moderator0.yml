@@ -1,0 +1,8 @@
+name: moderator0
+permissions:
+- easywhitelist.admin
+- essentials.tpo
+- essentials.tpoffline
+- essentials.tpohere
+parents:
+- moderator

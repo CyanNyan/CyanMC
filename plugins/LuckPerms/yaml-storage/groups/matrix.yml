@@ -1,8 +1,11 @@
 name: matrix
 permissions:
+- matrix.ccmd
 - matrix.command
 - matrix.gui
 - matrix.notify
 - matrix.ping
+- matrix.reload
+- matrix.togglechecks
 - matrix.verbose
 - matrix.violations
