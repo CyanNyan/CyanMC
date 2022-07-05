@@ -304,9 +304,9 @@ _run_server() {
 
     # If script is called by systemd, let it fork
     if [ -n "$INVOCATION_ID" ]; then
-      "$JAVA" $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS "$@" &
+      "$JAVA" $JVM_MEM $JVM_PARAMS $JVM_PROPERTIES -jar "$SERVER_JAR" $JAR_PARAMS "$@" &
     else
-      exec "$JAVA" $JVM_MEM $JVM_PARAMS -jar "$SERVER_JAR" $JAR_PARAMS "$@"
+      exec "$JAVA" $JVM_MEM $JVM_PARAMS $JVM_PROPERTIES -jar "$SERVER_JAR" $JAR_PARAMS "$@"
     fi
 }
 
