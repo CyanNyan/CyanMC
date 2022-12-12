@@ -5,7 +5,7 @@
 ############################################################
 
 # This is the config file for EssentialsX.
-# This config was generated for version 2.19.0-dev+163-6406674.
+# This config was generated for version 2.20.0-dev+20-582a357.
 
 # If you want to use special characters in this document, such as accented letters, you MUST save the file as UTF-8, not ANSI.
 # If you receive an error when Essentials loads, ensure that:
@@ -27,9 +27,10 @@
 ops-name-color: '4'
 
 # The character(s) to prefix all nicknames, so that you know they are not true usernames.
+# Users with essentials.nick.hideprefix will not be prefixed with the character(s)
 nickname-prefix: '~'
 
-# The maximum length allowed in nicknames. The nickname prefix is included in this.
+# The maximum length allowed in nicknames. The nickname prefix is not included in this.
 max-nick-length: 15
 
 # A list of phrases that cannot be used in nicknames. You can include regular expressions here.
@@ -98,7 +99,7 @@ teleport-delay: 5
 
 # The delay, in seconds, a player can't be attacked by other players after they have been teleported by a command.
 # This will also prevent the player attacking other players.
-teleport-invulnerability: 3
+teleport-invulnerability: 4
 
 # Whether to make all teleportations go to the center of the block; where the x and z coordinates decimal become .5
 teleport-to-center: true
@@ -160,7 +161,7 @@ notify-player-of-mail-cooldown: 60
 #
 # If you have two plugin with the same command and you wish to force Essentials to take over, you need an alias.
 # To force essentials to take 'god' alias 'god' to 'egod'.
-# See http://wiki.bukkit.org/Commands.yml#aliases for more information.
+# See https://bukkit.fandom.com/wiki/Commands.yml#aliases for more information.
 
 overridden-commands:
 #  - god
@@ -168,7 +169,7 @@ overridden-commands:
 
 # Disabling commands here will prevent Essentials handling the command, this will not affect command conflicts.
 # You should not have to disable commands used in other plugins, they will automatically get priority.
-# See http://wiki.bukkit.org/Commands.yml#aliases to map commands to other plugins.
+# See https://bukkit.fandom.com/wiki/Commands.yml#aliases to map commands to other plugins.
 disabled-commands:
 #  - nick
 #  - clear
@@ -283,6 +284,7 @@ player-commands:
   - protect
   - r
   - rules
+  - renamehome
   - realname
   - seen
   - sell
@@ -902,10 +904,10 @@ chat:
   # {TEAMPREFIX} - The sender's scoreboard team prefix.
   # {TEAMSUFFIX} - The sender's scoreboard team suffix.
 
+  format: '&2[&2{DISPLAYNAME}&2]&r {MESSAGE}'
   #format: '<{DISPLAYNAME}> {MESSAGE}'
   #format: '&7[{GROUP}]&r {DISPLAYNAME}&7:&r {MESSAGE}'
   #format: '&7{PREFIX}&r {DISPLAYNAME}&r &7{SUFFIX}&r: {MESSAGE}'
-  format: '&2[&2{DISPLAYNAME}&2]&r {MESSAGE}'
 
   group-formats:
   #  default: '{WORLDNAME} {DISPLAYNAME}&7:&r {MESSAGE}'
