@@ -197,7 +197,7 @@ _check_update() {
         ;;
     "geyser")
         API_PATH="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master"
-        _jenkins_check_update "Geyser.jar"
+        _jenkins_check_update "Geyser-Standalone.jar"
         ;;
     "fabric")
         _fabric_check_update
