@@ -69,7 +69,7 @@ change-tab-complete-name: false
 #add-prefix-in-playerlist: true
 
 # When this option is enabled, player suffixes will be shown in the playerlist.
-# This feature only works for Minecraft version 1.8 and higher.
+# This feature only works for Minecraft version 1.8 and higher. 
 # This value of change-playerlist has to be true
 #add-suffix-in-playerlist: true
 
@@ -494,7 +494,7 @@ sleep-ignores-afk-players: true
 # Users with the permission node essentials.sleepingignored will always be ignored.
 sleep-ignores-vanished-player: true
 
-# Set the player's list name when they are AFK. This is none by default which specifies that Essentials
+# Set the player's list name when they are AFK. This is none by default which specifies that Essentials 
 # should not interfere with the AFK player's list name.
 # You may use color codes, use {USERNAME} the player's name or {PLAYER} for the player's displayname.
 afk-list-name: "none"
@@ -531,7 +531,7 @@ allow-silent-join-quit: true
 # or set this to "" to hide the message entirely.
 
 # Available placeholders:
-# {PLAYER} - The player's displayname.
+# {PLAYER} - The player's displayname. 
 # {USERNAME} - The player's username.
 # {PREFIX} - The player's prefix.
 # {SUFFIX} - The player's suffix.
@@ -547,7 +547,7 @@ custom-quit-message: "none"
 # Set this to "none" to use the the "custom-join-message" above for every join.
 
 # Available placeholders:
-# {PLAYER} - The player's displayname.
+# {PLAYER} - The player's displayname. 
 # {USERNAME} - The player's username.
 # {OLDUSERNAME} - The player's old username.
 # {PREFIX} - The player's prefix.
@@ -804,7 +804,7 @@ command-costs:
   #kit-tools: 1500
 
 # Set this to a currency symbol you want to use.
-# Remember, if you want to use special characters in this document,
+# Remember, if you want to use special characters in this document, 
 # such as accented letters, you MUST save the file as UTF-8, not ANSI.
 currency-symbol: '$'
 
@@ -915,7 +915,7 @@ chat:
 
   # If you are using group formats make sure to remove the '#' to allow the setting to be read.
   # Note: Group names are case-sensitive so you must match them up with your permission plugin.
-
+  
   # You can use permissions to control whether players can use formatting codes in their chat messages.
   # See https://essentialsx.net/wiki/Color-Permissions.html for more information.
 
@@ -1151,7 +1151,7 @@ newbies:
   # Do we want to give users anything on first join? Set to '' to disable
   # This kit will be given regardless of cost and permissions, and will not trigger the kit delay.
   kit: ''
-  # kit: tools
+  #kit: tools
 
 # What priority should we use for handling respawns?
 # Set this to none, if you want vanilla respawning behaviour.
@@ -1181,7 +1181,7 @@ respawn-at-anchor: true
 spawn-on-join: false
 # The following value of `guests` states that all players in group `guests` will be teleported to spawn when joining.
 #spawn-on-join: guests
-# The following list value states that all players in group `guests` and `admin` are to be teleported to spawn when joining.
+# The following list value states that all players in group `guests` and `admin` are to be teleported to spawn when joining. 
 #spawn-on-join:
 #- guests
 #- admin
