@@ -36,9 +36,9 @@ MCRCON_ROOT="mcrcon"
 FABRIC_DIR="fabric-$VERSION"
 RCON_CONFIG="server.properties"
 
-AUTHLIB_INJECTOR_VERSION=1.2.1  # https://github.com/yushijinhun/authlib-injector/releases
-FABRIC_INSTALLER_VERSION=0.11.1  # https://maven.fabricmc.net/net/fabricmc/fabric-installer/
-HMCL_VERSION=3.5.3.228  # https://github.com/huanghongxun/HMCL/releases
+AUTHLIB_INJECTOR_VERSION=1.2.3  # https://github.com/yushijinhun/authlib-injector/releases
+FABRIC_INSTALLER_VERSION=0.11.2  # https://maven.fabricmc.net/net/fabricmc/fabric-installer/
+HMCL_VERSION=3.5.4.234  # https://github.com/huanghongxun/HMCL/releases
 
 AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
 FABRIC_INSTALLER_JAR="fabric-installer-$FABRIC_INSTALLER_VERSION.jar"
