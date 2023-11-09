@@ -38,7 +38,7 @@ RCON_CONFIG="server.properties"
 
 AUTHLIB_INJECTOR_VERSION=1.2.3  # https://github.com/yushijinhun/authlib-injector/releases
 FABRIC_INSTALLER_VERSION=0.11.2  # https://maven.fabricmc.net/net/fabricmc/fabric-installer/
-HMCL_VERSION=3.5.4.234  # https://github.com/huanghongxun/HMCL/releases
+HMCL_VERSION=3.5.5  # https://github.com/huanghongxun/HMCL/releases
 
 AUTHLIB_INJECTOR_JAR="authlib-injector-$AUTHLIB_INJECTOR_VERSION.jar"
 FABRIC_INSTALLER_JAR="fabric-installer-$FABRIC_INSTALLER_VERSION.jar"
@@ -186,7 +186,7 @@ _authlib_injector_check_update() {
 _hmcl_check_update() {
     if [ ! -f "$SERVER_JAR" ]; then
         echo "Downloading $SERVER_JAR..."
-        curl -fsSLo "$SERVER_JAR" "https://github.com/huanghongxun/HMCL/releases/download/v$VERSION/HMCL-$VERSION.jar"
+        curl -fsSLo "$SERVER_JAR" "https://github.com/huanghongxun/HMCL/releases/download/release-$VERSION/HMCL-$VERSION.jar"
     fi
 }
 
